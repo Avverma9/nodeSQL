@@ -1,7 +1,7 @@
 const express = require("express");
 const { sequelize } = require("./db");
 
-const route = require("./route"); // Assuming that route.js exports a router instance
+const route = require("./route"); 
 const app = express();
 app.use(express.json());
 

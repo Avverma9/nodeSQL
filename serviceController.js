@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const user = require("./user"); // Make sure to import your user model
+const user = require("./user");
 const Service = require("./service");
 
 
