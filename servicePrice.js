@@ -1,8 +1,8 @@
 // models/servicePriceOptions.js
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('./db');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("./db");
 
-const ServicePriceOptions = sequelize.define('servicePriceOptions', {
+const ServicePriceOptions = sequelize.define("servicePriceOptions", {
   duration: {
     type: DataTypes.INTEGER,
   },
@@ -12,7 +12,7 @@ const ServicePriceOptions = sequelize.define('servicePriceOptions', {
   type: {
     type: DataTypes.STRING,
     validate: {
-      isIn: [['Hourly', 'Weekly', 'Monthly']],
+      isIn: [["Hourly", "Weekly", "Monthly"]],
     },
   },
 });
