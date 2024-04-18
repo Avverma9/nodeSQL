@@ -7,14 +7,14 @@ const ServicePriceController = require("./servicePriceController");
 router.post("/register", Category.createUser);
 router.post("/login", Category.signIn);
 
-router.use(Category.authenticateUser);
+
 router.post("/category", Category.createCategory);
 router.get("/categories", Category.getCategory);
 router.put("/category/:categoryId", Category.updateCategoryById);
 router.delete("/category/:categoryId", Category.deleteCategoryById);
 
 // Services routes
-router.use(service.authenticateUser);
+
 router.post("/category/:categoryId/service", service.createService);
 
 // Get Services within a Category

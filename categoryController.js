@@ -1,19 +1,9 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+
 const Category = require("./category");
 const user = require("./user");
 
 //JWT PART
-const generateToken = (user) => {
-  const payload = {
-    userId: user.id,
-    username: user.Username,
-  };
-  const options = {
-    expiresIn: "1h",
-  };
-  return jwt.sign(payload, process.env.JWT_SECRET, options);
-};
 
 const createUser = async (req, res) => {
   const { Username, email, password } = req.body;
@@ -42,7 +32,7 @@ const signIn = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
-    const token = generateToken(userData);
+  
     res.json({ token });
   } catch (error) {
     console.error("Error during login:", error);
@@ -50,28 +40,10 @@ const signIn = async (req, res) => {
   }
 };
 
-const authenticateUser = async (req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token) {
-    return res.status(401).json({ error: "Authentication token missing" });
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const authenticatedUser = await user.findByPk(decoded.userId);
-    if (!authenticatedUser) {
-      return res.status(401).json({ error: "Invalid token" });
-    }
-    req.user = authenticatedUser;
-
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: "Invalid token" });
-  }
-};
 
 const createCategory = async (req, res) => {
-  const { categoryName } = req.body;
-  const userId = req.user.id;
+  const { categoryName ,userId} = req.body;
+  
 
   try {
     if (!categoryName) {
@@ -91,8 +63,8 @@ const createCategory = async (req, res) => {
 };
 
 const getCategory = async (req, res) => {
-  const userId = req.user.id;
-
+ 
+const {userId} = req.body
   try {
     const categories = await Category.findAll({
       where: { userId },
@@ -168,5 +140,5 @@ module.exports = {
   createCategory,
   updateCategoryById,
   deleteCategoryById,
-  authenticateUser,
+
 };

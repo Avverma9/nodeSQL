@@ -3,24 +3,7 @@ const user = require("./user");
 const Service = require("./service");
 
 
-const authenticateUser = async (req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token) {
-    return res.status(401).json({ error: "Authentication token missing" });
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const authenticatedUser = await user.findByPk(decoded.userId);
-    if (!authenticatedUser) {
-      return res.status(401).json({ error: "Invalid token" });
-    }
-    req.user = authenticatedUser;
 
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: "Invalid token" });
-  }
-};
 
 const createService = async (req, res) => {
   try {
@@ -97,5 +80,5 @@ module.exports = {
   getServices,
   updateServiceById,
   deleteServiceById,
-  authenticateUser,
+  
 };
